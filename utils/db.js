@@ -59,6 +59,19 @@ class DBClient {
     const filesCount = await this.client.db(this.dbName).collection('files').countDocuments();
     return filesCount;
   }
+
+  /**
+   * Retrieves the users collection from the database.
+   *
+   * @return {Collection} The users collection.
+   */
+  async usersCollection() {
+    if (!this.isConnected) {
+      console.log('DB is not connected');
+      await this.client.connect();
+    }
+    return this.client.db(this.dbName).collection('users');
+  }
 }
 
 const dbClient = new DBClient();
