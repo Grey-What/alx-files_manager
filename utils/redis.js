@@ -1,15 +1,15 @@
-import { createClient } from "redis";
-import { promisify } from "util";
+import { createClient } from 'redis';
+import { promisify } from 'util';
 
 class RedisClient {
   constructor() {
     this.client = createClient();
     this.isClientConnected = true;
-    this.client.on("error", (err) => {
-      console.error("Redis client has failed to connect:", err.message || err.toString());
+    this.client.on('error', (err) => {
+      console.error('Redis client has failed to connect:', err.message || err.toString());
       this.isClientConnected = false;
     });
-    this.client.on("connect", () => {
+    this.client.on('connect', () => {
       this.isClientConnected = true;
     });
   }
@@ -28,7 +28,7 @@ class RedisClient {
   }
 
   async del(key) {
-    await promisify(this.client, DEL).bind(this.client)(key);
+    await promisify(this.client.DEL).bind(this.client)(key);
   }
 }
 
