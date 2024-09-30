@@ -2,7 +2,7 @@ import shai from 'sha1';
 import Queue from 'bull/lib/queue';
 import dbClient from '../utils/db';
 
-const usrQueue = new Queue('email sending');
+const usrQueue = new Queue('email-sending');
 
 export default class UsersController {
   static async postNew(req, res) {
@@ -28,7 +28,7 @@ export default class UsersController {
 
     const insertion = await (await dbClient.usersCollection())
       .insertOne({ email, password: shai(password) });
-    const usrId = insertion.InsertedId.toString();
+    const usrId = insertion.insertedId.toString();
 
     usrQueue.add({ usrId });
     res.status(201).json({ email, id: usrId });
