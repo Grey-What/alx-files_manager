@@ -19,7 +19,7 @@ export default class UsersController {
       return;
     }
 
-    const usr = await (await dbClient.usersCollection()).findone({ email });
+    const usr = await (await dbClient.usersCollection()).findOne({ email });
 
     if (usr) {
       res.status(400).json({ error: 'Already exist' });
@@ -27,7 +27,7 @@ export default class UsersController {
     }
 
     const insertion = await (await dbClient.usersCollection())
-      .insertone({ email, password: shai(password) });
+      .insertOne({ email, password: shai(password) });
     const usrId = insertion.InsertedId.toString();
 
     usrQueue.add({ usrId });
