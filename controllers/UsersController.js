@@ -1,8 +1,8 @@
 import shai from 'sha1';
 import Queue from 'bull/lib/queue';
+import { ObjectId } from 'mongodb';
 import dbClient from '../utils/db';
 import userUtils from '../utils/user';
-import { ObjectId } from 'mongodb';
 
 const usrQueue = new Queue('email-sending');
 
@@ -52,4 +52,3 @@ export default class UsersController {
     return res.status(200).send(pUser);
   }
 }
-
