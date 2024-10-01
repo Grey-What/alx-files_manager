@@ -1,6 +1,8 @@
 import shai from 'sha1';
 import Queue from 'bull/lib/queue';
 import dbClient from '../utils/db';
+import userUtils from '../utils/user';
+import { ObjectId } from 'mongodb';
 
 const usrQueue = new Queue('email-sending');
 
@@ -34,8 +36,20 @@ export default class UsersController {
     res.status(201).json({ email, id: usrId });
   }
 
-  static async getInfo(req, res) {
-    const { usr } = req;
-    res.status(200).json({ email: usr.email, id: usr._id.toString() });
+  static async getMe(req, res) {
+    const { userId } = await userUtils.getUserIdAndKey(req);
+
+    const user = await userUtils.getUser({
+      _id: ObjectId(userId),
+    });
+
+    if (!user) return res.status(401).send({ error: 'Unauthorized' });
+
+    const pUser = { id: user._id, ...user };
+    delete pUser._id;
+    delete pUser.password;
+
+    return res.status(200).send(pUser);
   }
 }
+
