@@ -14,7 +14,7 @@ const addRoutes = (api) => {
   api.get('/files/:id/data', FilesController.getFile);
 
   api.put('/files/:id/publish', FilesController.putPublish);
-  api.put('/files/:id/publish', FilesController.putUnpublish);
+  api.put('/files/:id/unpublish', FilesController.putUnpublish);
 
   api.post('/users', UsersController.postNew);
   api.post('/files', FilesController.postUpload);

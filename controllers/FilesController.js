@@ -57,7 +57,7 @@ class FilesController {
   }
 
   static async getShow(req, res) {
-    const fileId = request.params.id;
+    const fileId = req.params.id;
 
     const { usrId } = await userUtils.getUserIdAndKey(req);
 
@@ -69,12 +69,12 @@ class FilesController {
 
     if (!basicUtils.isValidId(fileId) || !basicUtils.isValidId(usrId)) { return res.status(404).send({ error: 'Not found' }); }
 
-    const res = await fileUtils.fetchFile({
+    const result = await fileUtils.fetchFile({
       _id: ObjectId(fileId),
       userId: ObjectId(usrId),
     });
 
-    if (!res) return res.status(404).send({ error: 'Not found' });
+    if (!result) return res.status(404).send({ error: 'Not found' });
 
     const file = fileUtils.transformFile(result);
 
@@ -154,7 +154,7 @@ class FilesController {
   static async getFile(req, res) {
     const { usrId } = await userUtils.getUserIdAndKey(req);
     const { id: fileId } = request.params;
-    const size = request.query.size || 0;
+    const size = req.query.size || 0;
 
     if (!basicUtils.isValidId(fileId)) { return res.status(404).send({ error: 'Not found' }); }
 
