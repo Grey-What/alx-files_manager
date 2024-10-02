@@ -9,9 +9,15 @@ const addRoutes = (api) => {
   api.get('/connect', AuthController.getConnect);
   api.get('/disconnect', AuthController.getDisconnect);
   api.get('/users/me', UsersController.getMe);
+  api.get('/files/:id', FilesController.getShow);
+  api.get('/files', FilesController.getIndex);
+  api.get('/files/:id/data', FilesController.getFile);
+
+  api.put('/files/:id/publish', FilesController.putPublish);
+  api.put('/files/:id/publish', FilesController.putUnpublish);
 
   api.post('/users', UsersController.postNew);
-  api.post('/file', FilesController.postUpload);
+  api.post('/files', FilesController.postUpload);
 };
 
 export default addRoutes;

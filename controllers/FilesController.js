@@ -14,7 +14,7 @@ class FilesController {
   static async postUpload(req, res) {
     const { usrId } = await userUtils.getUserIdAndKey(req);
 
-    if (!basicUtils.isValidId(usrId)) {
+    if (!basicUtils.isIdValid(usrId)) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
     if (!usrId && req.body.type === 'image') {
@@ -55,7 +55,7 @@ class FilesController {
 
     return res.status(201).send(newFile);
   }
-/*
+
   static async getShow(req, res) {
     const fileId = request.params.id;
 
@@ -180,6 +180,5 @@ class FilesController {
 
     return res.status(200).send(data);
   }
-*/
 }
 export default FilesController;
